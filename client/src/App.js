@@ -1,29 +1,17 @@
 
 import './App.css';
-import React,{ useEffect,useState } from 'react';
-import axios from 'axios';
-const App = () => {
-	const [data,setData] = useState([])
-	useEffect(() => {
-		axios.get("http://localhost:3001/posts/")
-			.then((res) => {
-				console.log(res)
-				setData(res.data)
+import {BrowserRouter as Router , Route , Switch} from "react-router-dom"
+import Home from './pages/Home';
 
-			})
-	},[])
+const App = () => {
+
 	return (
 		<div className="App">
-
-			{data.map((value,index) => {
-				return <div className="post" key={index}>
-					<div className="title" >{value.title}</div>
-					<div className="body" >{value.postText}</div>
-					<div className="username" >{value.username}</div>
-				</div>
-
-			})}
-
+			<Router>
+				<Switch>
+					<Route exact path="/" component={Home}/>
+				</Switch>
+			</Router>
 
 		</div>
 	);
