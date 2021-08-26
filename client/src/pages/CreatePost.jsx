@@ -50,7 +50,7 @@ const CreatePost = ()=> {
           <label>Username: </label>
           <ErrorMessage name="username" component="span" />
           <Field
-            autocomplete="off"
+            autoComplete="off"
             id="inputCreatePost"
             name="username"
             placeholder="(Ex. John123...)"

@@ -6,11 +6,12 @@ function Post() {
   let { id } = useParams();
   const [postObject, setPostObject] = useState({});
 
-//   useEffect(() => {
-//     axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
-//       setPostObject(response.data);
-//     });
-//   });
+  useEffect(() => {
+    axios.get(`http://localhost:3003/posts/byId/${id}`).then((response) => {
+      console.log(response)
+      setPostObject(response.data);
+    });
+  },[]);
   return (
     <div className="postPage">
       <div className="leftSide">
