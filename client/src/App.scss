@@ -10,10 +10,12 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+ 
+  overflow-y: auto;
 }
 .App .post {
 	width: 20%;
-	min-height: 10vh;
+	height: 20vh;
 	border: 1px solid rgb(114, 111, 111);
 	border-radius: 15px;
 	background-color: rgb(247, 247, 247);
