@@ -1,3 +1,4 @@
+
 module.exports = (sequelize, DataType)=>{
     const Posts = sequelize.define("Posts", {
         title :  {
@@ -13,5 +14,10 @@ module.exports = (sequelize, DataType)=>{
             allowNull : false
         }
     })
+    Posts.associate= (models)=>{
+        Posts.hasMany(models.Comments , {
+            onDelete : "cascade"
+        })
+    }
     return Posts;
 }
