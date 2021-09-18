@@ -5,18 +5,30 @@ import axios from "axios";
 function Post() {
   let { id } = useParams();
   const [postObject, setPostObject] = useState({});
-  const [comments ,setComments] = useState([]);
-
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
+const getComments = ()=>{
+  axios.get(`http://localhost:3003/comments/${id}`).then((response) => {
+    setComments(response.data);
+  });
+}
   useEffect(() => {
     axios.get(`http://localhost:3003/posts/byId/${id}`).then((response) => {
       
       setPostObject(response.data);
     });
-    axios.get(`http://localhost:3003/comments/${id}`).then((response) => {
-      console.log(response.data)
-      setComments(response.data);
-    });
+    getComments();
+  
   },[]);
+
+  const addComment = ()=>{
+    console.log(newComment)
+    const body = {commentBody : newComment , PostId : id}
+    axios.post('http://localhost:3003/comments',body ).then(res=>{
+        getComments()
+    })
+
+  }
   return (
     <div className="postPage">
       <div className="leftSide">
@@ -28,16 +40,25 @@ function Post() {
       </div>
       <div className="rightSide">
         <div className="addCommentContainer">
-          <input type="text" placeholder="Add new comment" autoComplete="off" />
-          <button>add</button>
+          <input
+            type="text"
+            placeholder="Comment..."
+            autoComplete="off"
+            value={newComment}
+            onChange={(event) => {
+              setNewComment(event.target.value);
+            }}
+          />
+          <button onClick={addComment}> Add Comment</button>
         </div>
         <div className="listOfComments">
-          <ul>
-          {comments && comments.map((comment, index)=>{
-            return<li className="comment" key={index}>{comment.commentBody}</li>
+          {comments.map((comment, key) => {
+            return (
+              <div key={key} className="comment">
+                {comment.commentBody}
+              </div>
+            );
           })}
-          </ul>
-
         </div>
       </div>
     </div>

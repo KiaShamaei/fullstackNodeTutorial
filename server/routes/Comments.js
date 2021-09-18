@@ -14,9 +14,14 @@ router.get("/:postId" , async (req , res)=>{
     const comments =await Comments.findAll({where : {PostId : postId}}) ;
     res.json(comments)
 })
+
 router.post ("/" , async(req, res)=>{
     const comment = req.body ; 
-    await Comments.create(comment)
+    try{
+        await Comments.create(comment)
+    }catch{
+        throw Error("this is wrong id")
+    }
     res.json(comment)
 } )
 
