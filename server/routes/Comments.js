@@ -2,7 +2,7 @@ const { json } = require("body-parser");
 const express = require ("express") ;
 const router  = express.Router() ;
 const { Comments } = require("../models");
-
+const {validToken} =require('../middlewares/AuthMiddleware')
 
 router.get("/" , async (req, res)=>{
     const listComments = await Comments.findAll();
@@ -15,7 +15,7 @@ router.get("/:postId" , async (req , res)=>{
     res.json(comments)
 })
 
-router.post ("/" , async(req, res)=>{
+router.post ("/" ,validToken ,async(req, res)=>{
     const comment = req.body ; 
     try{
         await Comments.create(comment)

@@ -22,10 +22,16 @@ const getComments = ()=>{
   },[]);
 
   const addComment = ()=>{
-    console.log(newComment)
+    
     const body = {commentBody : newComment , PostId : id}
-    axios.post('http://localhost:3003/comments',body ).then(res=>{
-        getComments()
+    axios.post('http://localhost:3003/comments',body , {
+		headers  : {accessToken : sessionStorage.getItem("accessToken")}
+	} ).then(res=>{
+        if(res.data.error){
+			console.log(res.data.error)
+		}else{
+			getComments()
+		}
     })
 
   }
