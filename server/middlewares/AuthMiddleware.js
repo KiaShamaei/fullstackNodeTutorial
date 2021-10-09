@@ -9,7 +9,10 @@ const validToken= (req ,res , next)=>{
 
 		//string in ssecound arg must be same in where sign define .
 		const validToken = verify(accessToken , "secret");
-		if(validToken) return next()
+		req.user = validToken; 
+		if(validToken) { 
+			return next()
+		}
 	} catch (error) {
 		return res.json({error })
 	}

@@ -3,6 +3,7 @@ const router = express.Router();
 const { Users } = require("../models");
 const bcrypt = require("bcrypt");
 const {sign} = require("jsonwebtoken");
+const {validToken} = require("../middlewares/AuthMiddleware")
 
 router.post("/", async (req, res) => {
   const { username, password } = req.body;
@@ -25,8 +26,11 @@ router.post("/login", async (req, res) => {
   bcrypt.compare(password, user.password).then((match) => {
     if (!match) res.json({ error: "Wrong Username And Password Combination" });
 	const accesstoken = sign({username :  user.username , id : user.id} , "secret")
-    res.json(accesstoken);
+    res.json({username : user.username ,id: user.id , token :accesstoken});
   });
 });
+router.get("/auth" ,validToken , (req, res)=>{
+	res.json(req.user)
+} )
 
 module.exports = router;

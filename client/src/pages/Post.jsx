@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from './../helpers/AuthContext';
 
 function Post() {
+const {auth}= useContext(AuthContext);
   let { id } = useParams();
   const [postObject, setPostObject] = useState({});
   const [comments, setComments] = useState([]);
@@ -35,6 +37,17 @@ const getComments = ()=>{
     })
 
   }
+  const handleDeleteComment =(id)=>{
+	  console.log(id)
+	axios.delete(`http://localhost:3003/comments/${id}`, {
+		headers : {
+			accessToken : sessionStorage.getItem("accessToken")
+		}
+	}).then(e=>{
+		e ? getComments()
+		:alert(e)
+	})
+  }
   return (
     <div className="postPage">
       <div className="leftSide">
@@ -62,6 +75,12 @@ const getComments = ()=>{
             return (
               <div key={key} className="comment">
                 {comment.commentBody}
+				<span>{comment.username}</span>
+				{
+					auth.username === comment.username &&
+					<button onClick={()=>handleDeleteComment(comment.id)}>X</button>
+
+				}
               </div>
             );
           })}

@@ -20,10 +20,12 @@ const CreatePost = ()=> {
   });
 
   const onSubmit = (data) => {
-    axios.post("http://localhost:3003/posts", data).then((response) => {
+    axios.post("http://localhost:3003/posts", data , {
+		headers : {accessToken :  sessionStorage.getItem("accessToken")} }).then((response) => {
       history.push("/")
+	  console.log(response)
     });
-    console.log(data)
+   
   };
   return (
     <div className="createPostPage">
