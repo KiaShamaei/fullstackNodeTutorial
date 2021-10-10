@@ -1,9 +1,12 @@
-import React,{ useEffect,useState } from 'react';
+import React,{ useEffect,useState, useContext } from 'react';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
+import { AuthContext } from './../helpers/AuthContext';
+
 
 
 const Home = () => {
+	const {auth} = useContext(AuthContext)
 	const [data,setData] = useState([])
 	const [likedPost , setLikedPost ] = useState([])
 	const history = useHistory();
@@ -37,17 +40,19 @@ const Home = () => {
 		})
 	}
 	useEffect(() => {
-		axios.get("http://localhost:3003/posts/", {headers :{
+		if(!auth.status){
+			history.push("/login")
+		}else{
+			axios.get("http://localhost:3003/posts/", {headers :{
 			"accessToken" :  sessionStorage.getItem("accessToken")
 		}})
 			.then((res) => {
 				setData(res.data.listOfPosts)
 				setLikedPost(res.data.postLikes.map(m=>m.PostId))
-				console.log(res.data.postLikes)
-
 			})
+		}
 	},[])
-	console.log(likedPost)
+
 	return (
 		<>
 

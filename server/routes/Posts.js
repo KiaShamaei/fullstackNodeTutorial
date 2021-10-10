@@ -22,6 +22,7 @@ router.get("/byId/:id", async (req, res) => {
 router.post("/",validToken ,async (req, res) => {
   const post = req.body;
   post.UserId = req.user.id ;
+  post.username = req.user.username ;
   try{
     await Posts.create(post);
   }catch{
