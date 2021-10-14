@@ -57,12 +57,46 @@ const getComments = ()=>{
 		history.push("/")
 	})
   }
+  const handleEdit =(option)=>{
+    if (option === "title"){
+      let newTitle = prompt("write new title : ")
+      axios.put("http://localhost:3003/posts/title", {newTitle , id  : id} , {headers : {
+        accessToken : sessionStorage.getItem("accessToken") 
+      }}).then(e=>{
+       let newPost = {...postObject}
+        newPost.title = e.data ;
+        setPostObject(newPost)
+      }
+        )
+
+    }else{
+      let newText = prompt("write new text : ")
+      axios.put("http://localhost:3003/posts/postText", {newText , id  : id} , {headers : {
+        accessToken : sessionStorage.getItem("accessToken") 
+      }}).then(e=>{
+        let newPost = {...postObject}
+        newPost.postText = e.data ;
+        setPostObject(newPost)
+      })
+
+    }
+  }
   return (
     <div className="postPage">
       <div className="leftSide">
         <div className="post" id="individual">
-          <div className="title"> {postObject.title} </div>
-          <div className="body">{postObject.postText}</div>
+          <div className="title"
+          onClick={()=>{
+            if(auth.username === postObject.username)
+            handleEdit("title")
+          }
+          }
+          > {postObject.title} </div>
+          <div className="body"
+            onClick={()=>{
+              if(auth.username === postObject.username)
+              handleEdit("body")}}
+          >{postObject.postText}</div>
           <div className="footer">{postObject.username}
 		  {auth.username === postObject.username && (<button
 		  onClick={handleDelete}

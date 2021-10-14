@@ -1,9 +1,10 @@
 import React ,{ useEffect, useState }from 'react'
-import { useParams } from 'react-router-dom';
+import { useParams , useHistory} from 'react-router-dom';
 import  axios  from 'axios';
 
 
 const Profile = () => {
+	
 	const {id} = useParams();
 	const [username , setUsername] = useState("");
 	const [posts , setPost] = useState("");
@@ -18,6 +19,9 @@ const Profile = () => {
 	return (
 		<div className="profileContainer">
 			<div className="profileInfo">Username : {username}</div>
+			<button onClick={()=>{
+
+			}}>Edit Password</button>
 			<div className="listOfPosts"></div>	
 		</div>
 	)
