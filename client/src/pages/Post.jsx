@@ -1,9 +1,10 @@
 import React, { useEffect, useState , useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams , useHistory} from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from './../helpers/AuthContext';
 
 function Post() {
+	const history = useHistory();
 const {auth}= useContext(AuthContext);
   let { id } = useParams();
   const [postObject, setPostObject] = useState({});
@@ -16,7 +17,6 @@ const getComments = ()=>{
 }
   useEffect(() => {
     axios.get(`http://localhost:3003/posts/byId/${id}`).then((response) => {
-      
       setPostObject(response.data);
     });
     getComments();
@@ -38,7 +38,6 @@ const getComments = ()=>{
 
   }
   const handleDeleteComment =(id)=>{
-	  console.log(id)
 	axios.delete(`http://localhost:3003/comments/${id}`, {
 		headers : {
 			accessToken : sessionStorage.getItem("accessToken")
@@ -48,13 +47,27 @@ const getComments = ()=>{
 		:alert(e)
 	})
   }
+  const handleDelete =()=>{
+	  axios.delete(`http://localhost:3003/posts/${id}` , {headers:{
+		accessToken : sessionStorage.getItem("accessToken") 
+	  }
+	}).then(res=>{
+		
+		alert(`"delete : " ${res.data}`);
+		history.push("/")
+	})
+  }
   return (
     <div className="postPage">
       <div className="leftSide">
         <div className="post" id="individual">
           <div className="title"> {postObject.title} </div>
           <div className="body">{postObject.postText}</div>
-          <div className="footer">{postObject.username}</div>
+          <div className="footer">{postObject.username}
+		  {auth.username === postObject.username && (<button
+		  onClick={handleDelete}
+		  >delete</button>)}
+		  </div>
         </div>
       </div>
       <div className="rightSide">

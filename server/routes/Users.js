@@ -32,5 +32,12 @@ router.post("/login", async (req, res) => {
 router.get("/auth" ,validToken , (req, res)=>{
 	res.json(req.user)
 } )
+router.get("/basicInfo/:id" , async(req,res)=>{
+	const id = req.params.id ;
+	const basicInfo = await Users.findByPk(id, {attributes:{
+		exclude:["password"]
+	}})
+	res.json(basicInfo)
+})
 
 module.exports = router;

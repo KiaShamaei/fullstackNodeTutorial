@@ -18,6 +18,13 @@ router.get("/byId/:id", async (req, res) => {
   res.json(post);
 
 });
+router.get("/byUserId/:id" , async(req ,res)=>{
+	const id = req.params.id ;
+	const postuser = await Posts.findAll({where:{
+		UserId : id
+	}})
+	res.json(postuser)
+})
 
 router.post("/",validToken ,async (req, res) => {
   const post = req.body;
@@ -30,5 +37,11 @@ router.post("/",validToken ,async (req, res) => {
   }
   res.json(post);
 });
+router.delete("/:postId",validToken ,async (req, res) => {
+	const id = req.params.postId
+	await Posts.destroy({where : {id : id}})
+	res.json(true)
+
+  });
 
 module.exports = router;

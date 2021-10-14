@@ -47,6 +47,9 @@
 
 
 }
+.post .title {
+	cursor : pointer;
+}
 .navbar {
 	width: 100%;
 	background-color: rgba(255, 230, 0, 0.952);
@@ -148,6 +151,7 @@
   
   #individual .body {
 	font-size: 25px;
+	cursor: pointer;
   }
   
   /* LOGIN */

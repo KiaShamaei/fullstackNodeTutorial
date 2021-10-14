@@ -9,6 +9,7 @@ import { Login } from './pages/Login';
 import { Registeration } from './pages/Registeration';
 import { AuthContext } from './helpers/AuthContext';
 import axios from 'axios';
+import Profile from './pages/profile/Profile';
 
 
 const App = () => {
@@ -48,6 +49,7 @@ const App = () => {
 					<Route exact path="/register" component={Registeration} />
 					<Route exact path="/login" component={Login} />
 					<Route exact path="/posts/:id" component={Post} />
+					<Route exact path="/profile/:id" component={Profile} />
 					<Route exact path="/" component={Home} />
 				</Switch>
 			</div>
