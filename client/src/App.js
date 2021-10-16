@@ -10,6 +10,7 @@ import { Registeration } from './pages/Registeration';
 import { AuthContext } from './helpers/AuthContext';
 import axios from 'axios';
 import Profile from './pages/profile/Profile';
+import { ChangePasseord } from './pages/profile/ChangePasseord';
 
 
 const App = () => {
@@ -50,6 +51,7 @@ const App = () => {
 					<Route exact path="/login" component={Login} />
 					<Route exact path="/posts/:id" component={Post} />
 					<Route exact path="/profile/:id" component={Profile} />
+					<Route exact path="/changepassword" component={ChangePasseord} />
 					<Route exact path="/" component={Home} />
 				</Switch>
 			</div>

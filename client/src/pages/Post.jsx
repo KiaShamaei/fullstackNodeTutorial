@@ -58,6 +58,7 @@ const getComments = ()=>{
 	})
   }
   const handleEdit =(option)=>{
+	  console.log(option)
     if (option === "title"){
       let newTitle = prompt("write new title : ")
       axios.put("http://localhost:3003/posts/title", {newTitle , id  : id} , {headers : {

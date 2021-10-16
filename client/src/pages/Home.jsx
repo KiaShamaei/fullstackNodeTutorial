@@ -71,7 +71,10 @@ const Home = () => {
 						 >
 							{value.postText}
 						</div>
-						<div className="username" >{`write by :  ${value.username}`}</div>
+						<div className="username" 
+						onClick={()=>{history.push(`/profile/${value.id}`)}}
+						
+						>{`write by :  ${value.username}`}</div>
 						<div className="footer">
 							<button
 							className={likedPost.includes(value.id)? "likebtn red" :"likebtn"}
